@@ -14,6 +14,7 @@ const config: Config = {
         satoshi: ["var(--font-satoshi)"],
         playfair: ["'Playfair Display'", "serif"],
         inter: ["'Inter'", "sans-serif"],
+        syne: ["'Syne'", "sans-serif"],
       },
       screens: {
         xs: "375px",
@@ -25,6 +26,14 @@ const config: Config = {
         frame: "77.5rem",
       },
       colors: {
+        printiqo: {
+          red: "#D71920",
+          accent: "#F03A47",
+          white: "#FFFFFF",
+          lightGray: "#F8F8F8",
+          text: "#1A1A1A",
+          border: "#EFEFEF",
+        },
         luxury: {
           gold: "#D4AF37",
           dark: "#0F0F0F",
@@ -44,7 +53,7 @@ const config: Config = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#D71920",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -56,14 +65,14 @@ const config: Config = {
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
+          DEFAULT: "#F03A47",
           foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "hsl(var(--border))",
+        border: "#EFEFEF",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
@@ -73,6 +82,10 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+      },
+      boxShadow: {
+        'soft': '0 4px 24px -2px rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.02)',
+        'soft-hover': '0 12px 36px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04)',
       },
       borderRadius: {
         lg: "var(--radius)",

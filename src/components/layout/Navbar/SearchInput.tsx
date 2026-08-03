@@ -19,7 +19,7 @@ const SearchInput = () => {
   const searchQuery = searchParams.get("search") || "";
 
   const [query, setQuery] = useState(searchQuery);
-  const [placeholder, setPlaceholder] = useState("Search Resorts, Events...");
+  const [placeholder, setPlaceholder] = useState("Search gifts...");
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -38,7 +38,7 @@ const SearchInput = () => {
       if (window.innerWidth < 640) {
         setPlaceholder("Search...");
       } else {
-        setPlaceholder("Search Resorts, Events...");
+        setPlaceholder("Search gifts...");
       }
     };
     handleResize();

@@ -29,7 +29,7 @@ const ResTopNavbar = ({ data }: { data: NavMenu }) => {
           height={100}
           width={100}
           alt="menu"
-          className="max-w-[22px] max-h-[22px]"
+          className="max-w-[22px] max-h-[22px] brightness-0 invert"
         />
       </SheetTrigger>
       <SheetContent side="left" className="overflow-y-auto">
@@ -38,8 +38,8 @@ const ResTopNavbar = ({ data }: { data: NavMenu }) => {
             <SheetClose asChild>
               <Link href="/" className="flex items-center gap-2">
                 <Image
-                  src="/images/logo.jpg"
-                  alt="Nadav Resorts & Events Logo"
+                  src="/images/logo.png"
+                  alt="Printiqo Logo"
                   width={200}
                   height={60}
                   className="rounded-lg object-contain h-16 w-auto"

@@ -1,18 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import SearchInput from "../SearchInput";
 import ResTopNavbar from "./ResTopNavbar";
+import CartBtn from "./CartBtn";
+import SearchInput from "../SearchInput";
 
 const TopNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,67 +28,55 @@ const TopNavbar = () => {
   }, []);
 
   const navItems = [
-    { id: 1, type: "MenuItem" as const, label: "Tarif", url: "/#tarif", children: [] },
+    { id: 1, type: "MenuItem" as const, label: "Home", url: "/", children: [] },
+    { id: 2, type: "MenuItem" as const, label: "About Us", url: "/about", children: [] },
     { id: 3, type: "MenuItem" as const, label: "Contact", url: "/#contact", children: [] },
-    { id: 4, type: "MenuItem" as const, label: "Location", url: "/#location", children: [] },
-    { id: 5, type: "MenuItem" as const, label: "Our Facilities", url: "/shop", children: [] },
   ];
 
   return (
     <nav
       className={cn(
-        "z-50 sticky top-0 w-full bg-white/95 backdrop-blur-md shadow-sm border-b border-black/5 py-3 transition-all duration-300",
-        isScrolled && "shadow-md py-2.5 bg-white/98"
+        "z-50 sticky top-0 w-full transition-all duration-300",
+        isScrolled 
+          ? "bg-[#D71920]/95 backdrop-blur-xl shadow-sm border-b border-red-800 py-3" 
+          : "bg-[#D71920] border-b border-transparent py-4 md:py-6"
       )}
     >
-      <div className="flex relative max-w-frame mx-auto items-center justify-between px-4 xl:px-0 gap-3">
-        {/* Left: Logo & Brand Name */}
-        <div className="flex items-center flex-shrink-0">
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-          >
+      <div className="flex relative max-w-[1400px] mx-auto items-center justify-between px-6 lg:px-10 gap-3">
+        {/* Left: Logo */}
+        <div className="flex items-center flex-shrink-0 bg-white/10 rounded-lg p-2 backdrop-blur-sm">
+          <Link href="/" className="flex items-center">
             <Image
-              src="/images/logo.jpg"
-              alt="Nadav Resorts & Events Logo"
+              src="/images/logo.png"
+              alt="Printiqo Logo"
               width={200}
-              height={60}
-              className="rounded-lg object-contain transition-transform duration-300 hover:scale-105 h-11 sm:h-14 w-auto"
+              height={50}
+              className="object-contain h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105 brightness-0 invert"
               priority
             />
           </Link>
         </div>
 
         {/* Center: Navigation links (Desktop) */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-3">
-          {navItems.slice(0, 3).map((item) => (
+        <div className="hidden lg:flex flex-1 justify-center items-center gap-8">
+          {navItems.map((item) => (
             <Link
               key={item.id}
               href={item.url}
-              className="text-xs xl:text-sm font-semibold text-gray-700 hover:text-white px-4 py-1.5 rounded-full border border-black/5 hover:bg-[#FF8C00] hover:border-transparent transition-all duration-200"
+              className="text-sm font-medium text-white/90 hover:text-white transition-colors duration-200"
             >
               {item.label}
             </Link>
           ))}
         </div>
 
-        {/* Right: Search bar, "Our Facilities" button (Desktop) and Mobile Menu Trigger */}
-        <div className="flex items-center gap-2.5 sm:gap-3.5 flex-1 justify-end max-w-md">
-          <div className="flex-1 max-w-[160px] sm:max-w-xs md:max-w-sm">
-            <Suspense fallback={<div className="h-9 bg-[#F0F0F0] rounded-full animate-pulse w-full" />}>
-              <SearchInput />
-            </Suspense>
+        {/* Right: Actions and Mobile Hamburger */}
+        <div className="flex items-center gap-3 md:gap-5 flex-shrink-0 justify-end">
+          <div className="hidden lg:block w-64 xl:w-80">
+            <SearchInput />
           </div>
-          
-          <Link 
-            href="/shop" 
-            className="hidden lg:flex items-center justify-center text-xs xl:text-sm font-semibold text-white bg-[#1B5E20] hover:bg-[#154d19] px-6 h-11 rounded-full transition-all duration-200 whitespace-nowrap shadow-sm"
-          >
-            Our Facilities
-          </Link>
-
-          {/* Mobile hamburger menu (below lg) */}
-          <div className="lg:hidden flex items-center flex-shrink-0">
+          <CartBtn />
+          <div className="lg:hidden flex items-center">
             <ResTopNavbar data={navItems} />
           </div>
         </div>

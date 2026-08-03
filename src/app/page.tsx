@@ -1,6 +1,6 @@
 import ProductListSec from "@/components/common/ProductListSec";
 import HeroBanner from "@/components/homepage/Header";
-import FacilitiesSection from "@/components/homepage/FacilitiesSection";
+import CategoriesSection from "@/components/homepage/CategoriesSection";
 import { Product } from "@/types/product.types";
 import { Banner } from "@/types/banner.types";
 
@@ -42,15 +42,15 @@ async function getProducts(): Promise<Product[]> {
   }
 }
 
-async function getFacilities() {
+async function getCategories() {
   if (!api) return [];
   try {
-    const res = await fetch(`${api}/facility`, {
+    const res = await fetch(`${api}/category`, {
       next: { revalidate: 60 },
     });
     if (!res.ok || !res.headers.get("content-type")?.includes("application/json")) return [];
     const data = await res.json();
-    return data.facilities ?? [];
+    return data.categories ?? [];
   } catch {
     return [];
   }
@@ -73,26 +73,24 @@ async function getBanners(): Promise<Banner[]> {
 
 // Server component — no "use client", no useEffect, no client-side waterfall
 export default async function Home() {
-  const [products, facilities, banners] = await Promise.all([
+  const [products, categories, banners] = await Promise.all([
     getProducts(),
-    getFacilities(),
+    getCategories(),
     getBanners(),
   ]);
 
   return (
     <>
       <HeroBanner banners={banners} />
-      <FacilitiesSection facilities={facilities} />
       <main className="my-[50px] sm:my-[72px]">
-        <div id="tarif">
+        <CategoriesSection categories={categories} />
+        
+        <div id="products" className="mt-12 md:mt-24">
           <ProductListSec
-            title="Our Packages & Tarif"
+            title="Featured Products"
             data={products}
             viewAllLink="/shop"
           />
-        </div>
-        <div className="max-w-frame mx-auto px-4 xl:px-0">
-          <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
         </div>
       </main>
     </>

@@ -20,7 +20,9 @@ const PhotoSection = ({ data }: { data: Product }) => {
             <button
               key={index}
               type="button"
-              className="relative bg-[#F0EEED] rounded-[13px] xl:rounded-[20px] w-full max-w-[111px] xl:max-w-[152px] max-h-[106px] xl:max-h-[167px] xl:min-h-[167px] aspect-square overflow-hidden"
+              className={`relative bg-[#F0EEED] rounded-[13px] xl:rounded-[20px] w-full max-w-[111px] xl:max-w-[152px] max-h-[106px] xl:max-h-[167px] xl:min-h-[167px] aspect-square overflow-hidden transition-all ${
+                selected === photo ? "border-[3px] border-[#D71920] scale-95" : ""
+              }`}
               onClick={() => setSelected(photo)}
             >
               <Image

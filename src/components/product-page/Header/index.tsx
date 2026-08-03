@@ -146,7 +146,7 @@ const Header = ({ data }: { data: Product }) => {
           <>
             <div className="flex flex-col mb-5">
               <span className="text-sm sm:text-base text-black/60 mb-3">
-                Select Option: <span className="text-[#FF8C00] font-medium">{selectedVariant?.color}</span>
+                Select Option: <span className="text-[#D32F2F] font-medium">{selectedVariant?.color}</span>
               </span>
               <div className="flex items-center flex-wrap gap-3">
                 {variants.map((v) => (
@@ -157,7 +157,7 @@ const Header = ({ data }: { data: Product }) => {
                     className={cn(
                       "px-5 py-2.5 text-sm rounded-full font-medium transition-all border",
                       selectedVariant?._id === v._id
-                        ? "bg-[#FF8C00] text-white border-[#FF8C00] scale-105"
+                        ? "bg-[#D32F2F] text-white border-[#D32F2F] scale-105"
                         : "bg-black/5 text-black border-black/10 hover:bg-black/10"
                     )}
                   >
@@ -186,7 +186,7 @@ const Header = ({ data }: { data: Product }) => {
                     className={cn(
                       "px-6 py-3 text-sm rounded-full font-medium transition-all border",
                       selectedSize?._id === s._id
-                        ? "bg-[#FF8C00] text-white border-[#FF8C00]"
+                        ? "bg-[#D32F2F] text-white border-[#D32F2F]"
                         : "bg-black/5 text-black border-black/10 hover:bg-black/10"
                     )}
                   >
@@ -221,7 +221,7 @@ const Header = ({ data }: { data: Product }) => {
                   return (
                     <div
                       key={idx}
-                      className="flex items-center gap-2 px-3 py-1.5 bg-[#e8f5e9] border border-[#a5d6a7] rounded-full text-[#1B5E20] text-sm font-medium hover:bg-[#c8e6c9] transition-colors"
+                      className="flex items-center gap-2 px-3 py-1.5 bg-[#e8f5e9] border border-[#a5d6a7] rounded-full text-[#374151] text-sm font-medium hover:bg-[#c8e6c9] transition-colors"
                     >
                       <IoMdCheckmark className="text-[#388e3c]" />
                       {amName}

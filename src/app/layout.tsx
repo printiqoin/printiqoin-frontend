@@ -23,18 +23,18 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Nadav Resorts & Events",
-  description: "Premium Resorts, Event Management, Destination Weddings, Corporate Events and Hospitality Services.",
-  keywords: "Resorts, Event Management, Destination Wedding, Resort Booking, Hospitality Services, Kerala Events",
+  title: "Printiqo",
+  description: "Customized printing and gifting solutions.",
+  keywords: "Printiqo, Custom Printing, Gifting Solutions",
   openGraph: {
-    siteName: "Nadav Resorts & Events",
-    title: "Nadav Resorts & Events",
-    description: "Premium Resorts, Event Management, Destination Weddings, Corporate Events and Hospitality Services.",
+    siteName: "Printiqo",
+    title: "Printiqo",
+    description: "Customized printing and gifting solutions.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nadav Resorts & Events",
-    description: "Premium Resorts, Event Management, Destination Weddings, Corporate Events and Hospitality Services.",
+    title: "Printiqo",
+    description: "Customized printing and gifting solutions.",
   }
 };
 

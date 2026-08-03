@@ -13,36 +13,65 @@ const ProductCard = ({ data, priority = false }: ProductCardProps) => {
   return (
     <Link
       href={`/shop/product/${data.id}/${data.title.split(" ").join("-")}`}
-      className="flex flex-col items-start aspect-auto group w-full h-full p-3 sm:p-4 rounded-[16px] sm:rounded-[24px] bg-white border border-gray-100 hover:shadow-xl hover:border-gray-200 transition-all duration-300"
+      className="flex flex-col items-start aspect-auto group w-full h-full p-0 rounded-2xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-[#EFEFEF] hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
     >
-      <div className="relative bg-gray-50 rounded-[12px] sm:rounded-[18px] w-full aspect-square mb-3 overflow-hidden flex-shrink-0">
+      {/* Image Container */}
+      <div className="relative bg-[#F8F8F8] w-full aspect-[4/3] sm:aspect-square overflow-hidden flex-shrink-0">
         <Image
           src={data.srcUrl}
           fill
-          sizes="(max-width: 480px) 40vw, (max-width: 768px) 45vw, (max-width: 1024px) 40vw, 295px"
-          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          sizes="(max-width: 480px) 100vw, (max-width: 768px) 45vw, (max-width: 1024px) 30vw, 295px"
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           alt={data.title || "Product"}
           priority={priority}
           loading={priority ? "eager" : "lazy"}
         />
+        
+        {/* Status Badge */}
+        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-sm">
+          <span className="text-[10px] sm:text-xs font-bold tracking-wide uppercase text-[#1a1a1a]">
+            {data.price > 0 ? "In Stock" : "Request"}
+          </span>
+        </div>
       </div>
-      <strong className="text-gray-900 text-sm sm:text-base lg:text-lg font-bold line-clamp-1 leading-tight group-hover:text-primary transition-colors duration-300">{data.title}</strong>
-      <p className="text-gray-500 text-xs sm:text-sm line-clamp-2 mt-1.5 mb-3 text-left min-h-[32px] sm:min-h-[40px] leading-relaxed">
-        {data.description || "Premium resort and booking services."}
-      </p>
-      <div className="flex items-center space-x-[5px] xl:space-x-2.5 mb-3 mt-auto">
-        <span className="font-bold text-[#FF8C00] text-sm sm:text-base lg:text-lg">
-          ₹{data.price}
-        </span>
-      </div>
-      <div className="w-full">
-        <span className="w-full text-center block bg-[#FF8C00] text-white group-hover:bg-[#E67E00] font-semibold text-xs sm:text-sm py-2 sm:py-2.5 px-3 sm:px-4 rounded-full transition-all duration-300 truncate shadow-sm group-hover:shadow-md transform group-hover:-translate-y-[2px]">
-          Enquiry Now
-        </span>
+
+      {/* Content Section */}
+      <div className="flex flex-col w-full p-4 sm:p-5 flex-1 bg-white">
+        
+        {/* Category Label */}
+        {data.category && (
+          <span className="text-[10px] sm:text-xs font-semibold text-[#888888] uppercase tracking-wider mb-2 block">
+            {data.category}
+          </span>
+        )}
+
+        <strong className="text-[#1a1a1a] text-sm sm:text-base lg:text-lg font-bold line-clamp-2 leading-tight group-hover:text-[#D32F2F] transition-colors duration-300">
+          {data.title}
+        </strong>
+
+        <p className="text-[#555] text-xs sm:text-sm line-clamp-2 mt-2 mb-4 text-left leading-relaxed flex-1">
+          {data.description || "Premium personalized printing solutions for your brand."}
+        </p>
+
+        <div className="flex items-center justify-between w-full mt-auto pt-4 border-t border-[#f5f5f5]">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-[#888] font-medium uppercase tracking-wider">Starting at</span>
+            <span className="font-bold text-[#1a1a1a] text-lg sm:text-xl font-['Syne',sans-serif]">
+              {data.price > 0 ? `₹${data.price}` : "Custom"}
+            </span>
+          </div>
+
+          {/* View Details Button */}
+          <div className="bg-[#f8f8f8] text-[#1a1a1a] group-hover:bg-[#D32F2F] group-hover:text-white px-4 py-2 rounded-full font-semibold text-xs transition-colors duration-300 flex items-center gap-1 border border-[#eee] group-hover:border-[#D32F2F]">
+            View Details 
+            <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
       </div>
     </Link>
   );
 };
 
-// Prevent re-renders when parent re-renders but product data hasn't changed
 export default React.memo(ProductCard);

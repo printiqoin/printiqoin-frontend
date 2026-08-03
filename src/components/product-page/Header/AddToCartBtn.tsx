@@ -18,7 +18,7 @@ const AddToCartBtn = ({ data, attributes = [] }: Props) => {
       href={`https://wa.me/91${whatsappNumber}?text=${encodeURIComponent(textMessage)}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-black w-full ml-3 sm:ml-5 rounded-full h-11 md:h-[52px] text-sm sm:text-base text-white hover:bg-black/80 transition-all flex items-center justify-center font-medium"
+      className="bg-[#D71920] w-full ml-3 sm:ml-5 rounded-full h-11 md:h-[52px] text-sm sm:text-base text-white hover:bg-[#B3151A] transition-all flex items-center justify-center font-medium"
     >
       Enquiry Now
     </a>

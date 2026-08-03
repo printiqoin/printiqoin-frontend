@@ -59,7 +59,7 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
           <div className="w-full px-4 sm:px-0 text-center">
             <Link
               href={viewAllLink}
-              className="w-full inline-block sm:w-[218px] px-[54px] py-3.5 border rounded-full hover:bg-[#FF8C00] hover:text-white text-black hover:border-transparent transition-all duration-300 font-semibold text-sm sm:text-base border-black/15 shadow-sm hover:shadow-md transform hover:-translate-y-[1px]"
+              className="w-full inline-block sm:w-[218px] px-[54px] py-3.5 border rounded-full hover:bg-gradient-to-r hover:from-[#F03A47] hover:to-[#D71920] hover:text-white text-[#1a1a1a] hover:border-transparent transition-all duration-300 font-medium text-sm sm:text-base border-[#EFEFEF] shadow-sm hover:shadow-soft-hover transform hover:-translate-y-1"
             >
               View All
             </Link>
