@@ -127,7 +127,7 @@ const SearchInput = () => {
   return (
     <div className="relative w-full md:mr-3 lg:mr-10">
       <form onSubmit={handleSearch}>
-        <InputGroup className="flex bg-[#f5f5f5] border border-black/5 h-11 pl-0">
+        <InputGroup className="flex bg-[#f5f5f5] border border-black/5 h-10 md:h-[42px] pl-0">
           <InputGroup.Text className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 z-10 mr-0 pointer-events-none">
             <Image
               src="/icons/search.svg"

@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen pt-24 pb-12 bg-[#faf9f6]">
+    <main className="min-h-screen pt-8 md:pt-12 pb-12 bg-[#faf9f6]">
       <div className="max-w-4xl mx-auto px-4 xl:px-0">
         <AboutUsSection />
       </div>

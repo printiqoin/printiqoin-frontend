@@ -82,10 +82,10 @@ export default async function Home() {
   return (
     <>
       <HeroBanner banners={banners} />
-      <main className="my-[50px] sm:my-[72px]">
+      <main className="my-[24px] sm:my-[40px]">
         <CategoriesSection categories={categories} />
         
-        <div id="products" className="mt-12 md:mt-24">
+        <div id="products" className="mt-8 md:mt-16">
           <ProductListSec
             title="Featured Products"
             data={products}

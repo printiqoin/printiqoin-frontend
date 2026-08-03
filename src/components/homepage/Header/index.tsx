@@ -27,7 +27,7 @@ export default function HeroBanner({ banners = [] }: HeroBannerProps) {
   }
 
   return (
-    <section className="relative w-full h-[30vh] sm:h-[40vh] md:h-[60vh] lg:h-[80vh] overflow-hidden bg-white">
+    <section className="relative w-full overflow-hidden bg-[#F8F8F8] grid">
       <AnimatePresence mode="wait">
         {activeBanners.map((banner, index) => {
           if (index !== currentIndex) return null;
@@ -38,29 +38,35 @@ export default function HeroBanner({ banners = [] }: HeroBannerProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
-              className="absolute inset-0"
+              className="col-start-1 row-start-1 w-full relative"
             >
               {/* Desktop Image */}
-              <div className="hidden md:block w-full h-full relative">
+              <div className="hidden md:block w-full relative">
                 <Image
                   src={banner.desktopImage}
                   alt={banner.title || "Banner"}
-                  fill
-                  priority={index === 0}
-                  className="object-contain"
+                  width={0}
+                  height={0}
                   sizes="100vw"
+                  priority={index === 0}
+                  loading={index === 0 ? undefined : "lazy"}
+                  style={{ width: '100%', height: 'auto', maxHeight: '75vh', objectFit: 'cover', objectPosition: 'top' }}
+                  quality={90}
                 />
               </div>
 
               {/* Mobile Image */}
-              <div className="block md:hidden w-full h-full relative">
+              <div className="block md:hidden w-full relative">
                 <Image
-                  src={banner.mobileImage}
+                  src={banner.mobileImage || banner.desktopImage}
                   alt={banner.title || "Banner"}
-                  fill
-                  priority={index === 0}
-                  className="object-contain"
+                  width={0}
+                  height={0}
                   sizes="100vw"
+                  priority={index === 0}
+                  loading={index === 0 ? undefined : "lazy"}
+                  style={{ width: '100%', height: 'auto', maxHeight: '60vh', objectFit: 'cover', objectPosition: 'top' }}
+                  quality={90}
                 />
               </div>
 

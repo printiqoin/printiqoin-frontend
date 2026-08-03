@@ -30,7 +30,17 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
           "text-[32px] md:text-5xl mb-8 md:mb-14 capitalize",
         ])}
       >
-        {title}
+        {(() => {
+          if (typeof title !== 'string') return title;
+          const words = title.split(' ');
+          if (words.length <= 1) return title;
+          const lastWord = words.pop();
+          return (
+            <>
+              {words.join(' ')} <span className="text-[#D71920]">{lastWord}</span>
+            </>
+          );
+        })()}
       </motion.h2>
       <motion.div
         initial={{ y: "100px", opacity: 0 }}

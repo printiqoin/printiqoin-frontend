@@ -21,7 +21,7 @@ export default function CategoriesSection({ categories }: Props) {
   if (!categories || categories.length === 0) return null;
 
   return (
-    <section id="categories" className="max-w-frame mx-auto text-center px-4 xl:px-0 mt-12 md:mt-24">
+    <section id="categories" className="max-w-frame mx-auto text-center px-4 xl:px-0">
       <motion.h2
         initial={{ y: "50px", opacity: 0 }}
         whileInView={{ y: "0", opacity: 1 }}
@@ -32,7 +32,7 @@ export default function CategoriesSection({ categories }: Props) {
           "text-[32px] md:text-5xl mb-8 md:mb-14 capitalize text-[#1a1a1a]",
         ])}
       >
-        Shop by Category
+        Shop by <span className="text-[#D71920]">Category</span>
       </motion.h2>
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

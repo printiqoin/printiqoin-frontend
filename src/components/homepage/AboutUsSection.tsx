@@ -7,9 +7,9 @@ import Image from "next/image";
 
 export default function AboutUsSection() {
   return (
-    <section id="about" className="max-w-[1200px] mx-auto px-4 xl:px-0 mt-12 md:mt-20 mb-16 md:mb-24">
+    <section id="about" className="max-w-[1200px] mx-auto px-4 xl:px-0 mt-8 md:mt-12 mb-12 md:mb-16">
       {/* Title Section */}
-      <div className="text-center mb-12 md:mb-20">
+      <div className="text-center mb-8 md:mb-12">
         <motion.div
           initial={{ y: "30px", opacity: 0 }}
           whileInView={{ y: "0", opacity: 1 }}

@@ -72,7 +72,7 @@ export default function CartPage() {
                 "font-bold text-[32px] md:text-[40px] text-black uppercase mb-5 md:mb-6",
               ])}
             >
-              your cart
+              your <span className="text-[#D71920]">cart</span>
             </h2>
             <div className="flex flex-col lg:flex-row space-y-5 lg:space-y-0 lg:space-x-5 items-start">
               <div className="w-full p-3.5 md:px-6 flex-col space-y-4 md:space-y-6 rounded-[20px] border border-white/10">
