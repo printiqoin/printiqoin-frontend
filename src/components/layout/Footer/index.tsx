@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { PaymentBadge, SocialNetworks } from "./footer.types";
-import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import LayoutSpacing from "./LayoutSpacing";
@@ -8,21 +8,11 @@ import LayoutSpacing from "./LayoutSpacing";
 const socialsData: SocialNetworks[] = [
   {
     id: 1,
-    icon: <FaTwitter />,
-    url: "https://twitter.com",
+    icon: <FaInstagram />,
+    url: "https://www.instagram.com/printiqo.in?igsh=MTFqeGFvNGhoMHpjZQ%3D%3D&utm_source=qr",
   },
   {
     id: 2,
-    icon: <FaFacebookF />,
-    url: "https://www.facebook.com/share/1KqBBfzWnG/?mibextid=wwXIfr",
-  },
-  {
-    id: 3,
-    icon: <FaInstagram />,
-    url: "#",
-  },
-  {
-    id: 4,
     icon: <FaYoutube />,
     url: "https://youtube.com/@printiqo",
   },
