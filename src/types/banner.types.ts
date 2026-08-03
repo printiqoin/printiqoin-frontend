@@ -3,5 +3,7 @@ export type Banner = {
   desktopImage: string;
   mobileImage: string;
   isActive: boolean;
+  title?: string;
+  displayOrder?: number;
   created?: string;
 };
