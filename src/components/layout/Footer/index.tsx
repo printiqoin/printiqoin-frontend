@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { PaymentBadge, SocialNetworks } from "./footer.types";
-import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import LayoutSpacing from "./LayoutSpacing";
@@ -15,6 +15,11 @@ const socialsData: SocialNetworks[] = [
     id: 2,
     icon: <FaYoutube />,
     url: "https://youtube.com/@printiqo",
+  },
+  {
+    id: 3,
+    icon: <FaFacebook />,
+    url: "https://www.facebook.com/share/1GSh7GeuKk/?mibextid=wwXIfr",
   },
 ];
 
