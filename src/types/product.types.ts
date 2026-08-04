@@ -30,6 +30,7 @@ export type Product = {
   id: number | string;
   title: string;
   category?: string;
+  categoryId?: string;
   description?: string;
   srcUrl: string;
   gallery?: string[];

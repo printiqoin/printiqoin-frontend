@@ -69,8 +69,8 @@ const CategoriesSection = () => {
             </div>
           ) : categories.length > 0 ? (
             <div className="flex flex-col space-y-2">
-              {categories.map((cat) => (
-                <label key={cat.name} className="flex items-center space-x-2 cursor-pointer py-1">
+              {categories.map((cat, idx) => (
+                <label key={cat._id || idx} className="flex items-center space-x-2 cursor-pointer py-1">
                   <input
                     type="checkbox"
                     checked={selectedCategories.includes(cat.name)}

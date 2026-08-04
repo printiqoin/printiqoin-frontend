@@ -78,7 +78,10 @@ const ShopProductsList = () => {
       if (categories) {
         const selected = categories.split(",").map(c => c.trim().toLowerCase()).filter(Boolean);
         if (selected.length > 0) {
-          filtered = filtered.filter(p => selected.includes((p.category || "").toLowerCase().trim()));
+          filtered = filtered.filter(p => 
+            selected.includes((p.category || "").toLowerCase().trim()) || 
+            selected.includes((p.categoryId || "").toLowerCase().trim())
+          );
         }
       }
       if (minPrice || maxPrice) {
@@ -135,6 +138,7 @@ const ShopProductsList = () => {
               id: p._id,
               title: p.name,
               category: p.category?.name || "General",
+              categoryId: p.category?._id || (typeof p.category === 'string' ? p.category : ""),
               description: p.description || "No description available.",
               srcUrl: v?.images?.[0] || "/images/pic1.png",
               gallery: v?.images || [],
@@ -167,7 +171,7 @@ const ShopProductsList = () => {
 
     fetchAllProducts();
     return () => controller.abort();
-  }, [searchParams, currentPage, api]);
+  }, [searchParams.toString(), currentPage, api]);
 
   const search = searchParams.get("search");
   const categories = searchParams.get("categories");
@@ -180,7 +184,7 @@ const ShopProductsList = () => {
       {(search || categories || minPrice || maxPrice) && (
         <div className="text-sm text-black/60 space-y-1">
           {search && <p>Results for: <span className="font-semibold text-black">"{search}"</span></p>}
-          {categories && <p>Category: <span className="font-semibold text-black">{categories.split(",").join(", ")}</span></p>}
+
           {(minPrice || maxPrice) && (
             <p>Price: <span className="font-semibold text-black">₹{minPrice || "0"} – ₹{maxPrice || "∞"}</span></p>
           )}

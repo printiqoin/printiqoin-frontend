@@ -45,7 +45,7 @@ export default function CategoriesSection({ categories }: Props) {
             transition={{ delay: i * 0.1, duration: 0.5 }}
           >
             <Link
-              href={`/shop?categories=${cat._id}`}
+              href={`/shop?categories=${cat.name}`}
               className="group relative block cursor-pointer overflow-hidden rounded-2xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_35px_rgba(0,0,0,0.1)] transition-all duration-300"
             >
               {/* Image Container with 4:5 Aspect Ratio */}
