@@ -178,14 +178,14 @@ const Header = ({ data }: { data: Product }) => {
                 Choose Quantity
               </span>
               <div className="flex items-center flex-wrap gap-3">
-                {sizes.map((s) => (
+                {sizes.map((s, idx) => (
                   <button
-                    key={s._id}
+                    key={s.size || idx}
                     type="button"
                     onClick={() => setSelectedSize(s)}
                     className={cn(
                       "px-6 py-3 text-sm rounded-full font-medium transition-all border",
-                      selectedSize?._id === s._id
+                      selectedSize?.size === s.size
                         ? "bg-[#D32F2F] text-white border-[#D32F2F]"
                         : "bg-black/5 text-black border-black/10 hover:bg-black/10"
                     )}
