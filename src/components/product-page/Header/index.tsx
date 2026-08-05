@@ -78,24 +78,37 @@ const getValidColor = (colorName: string): string => {
 
 const Header = ({ data }: { data: Product }) => {
   const variants = data.variants ?? [];
-  const defaultVariant = variants.find((v) => v.isDefault) || variants[0] || null;
+  const availableModels = Array.from(new Set(variants.map(v => v.modelName).filter(Boolean))) as string[];
+  const [selectedModel, setSelectedModel] = useState<string>(availableModels[0] || "");
+  const selectedModelActual = availableModels.includes(selectedModel) ? selectedModel : (availableModels[0] || "");
 
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(defaultVariant);
-  const [selectedSize, setSelectedSize] = useState<SizeOption | null>(
-    defaultVariant?.sizesArray?.[0] || null
-  );
+  const validColorsForModel = Array.from(
+    new Set(
+      variants
+        .filter(v => !selectedModelActual || v.modelName === selectedModelActual)
+        .map(v => v.color)
+        .filter(Boolean)
+    )
+  ) as string[];
+  const [selectedColor, setSelectedColor] = useState<string>(validColorsForModel[0] || "");
+  const selectedColorActual = validColorsForModel.includes(selectedColor) ? selectedColor : (validColorsForModel[0] || "");
 
-  const displayPrice = selectedSize?.price ?? selectedVariant?.price ?? data.price;
-  const displayImages = selectedVariant?.images?.length
-    ? selectedVariant.images
+  const activeVariant = variants.find(v => 
+    (!selectedModelActual || v.modelName === selectedModelActual) &&
+    (!selectedColorActual || v.color === selectedColorActual)
+  ) || variants[0] || null;
+
+  const validSizesForVariant = activeVariant?.sizesArray || [];
+  const validSizeNames = validSizesForVariant.map(s => s.size);
+  const [selectedSize, setSelectedSize] = useState<string>(validSizeNames[0] || "");
+  const selectedSizeActual = validSizeNames.includes(selectedSize) ? selectedSize : (validSizeNames[0] || "");
+  const activeSizeObj = validSizesForVariant.find(s => s.size === selectedSizeActual);
+
+  const displayPrice = activeSizeObj?.price || activeVariant?.price || data.price;
+  const displayImages = activeVariant?.images?.length
+    ? activeVariant.images
     : data.gallery ?? [];
   const displaySrc = displayImages[0] || data.srcUrl;
-  const sizes = selectedVariant?.sizesArray ?? [];
-
-  const handleVariantSelect = (v: ProductVariant) => {
-    setSelectedVariant(v);
-    setSelectedSize(v.sizesArray?.[0] || null);
-  };
 
   const displayProduct: Product = {
     ...data,
@@ -104,11 +117,8 @@ const Header = ({ data }: { data: Product }) => {
     price: displayPrice,
   };
 
-  // attributes passed to cart: [color, size]
-  const cartAttributes = [
-    selectedVariant?.color || "Default",
-    selectedSize?.size || "One Size",
-  ];
+  // attributes passed to cart: selected model, color, and size (if they exist)
+  const cartAttributes = [selectedModelActual, selectedColorActual, selectedSizeActual].filter(Boolean);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -120,17 +130,27 @@ const Header = ({ data }: { data: Product }) => {
         <h1
           className={cn([
             integralCF.className,
-            "text-2xl md:text-[40px] md:leading-[40px] mb-3 md:mb-3.5 capitalize",
+            "text-2xl md:text-[40px] md:leading-[40px] mb-3 md:mb-3.5 capitalize break-words",
           ])}
         >
           {data.title}
         </h1>
 
-        {/* Price */}
-        <div className="flex items-center space-x-2.5 sm:space-x-3 mb-5">
-          <span className="font-bold text-black text-2xl sm:text-[32px]">
-            ₹{displayPrice}
-          </span>
+        {/* Price & Stock & SKU */}
+        <div className="flex flex-col gap-2 mb-5">
+          <div className="flex items-center space-x-2.5 sm:space-x-3">
+            <span className="font-bold text-black text-2xl sm:text-[32px]">
+              ₹{displayPrice}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-4 text-sm font-medium">
+            <span className={cn("px-2 py-1 rounded", activeSizeObj && activeSizeObj.stock > 0 ? "text-green-700 bg-green-100" : activeVariant && activeVariant.stock > 0 ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100")}>
+              {(activeSizeObj && activeSizeObj.stock > 0) || (!activeSizeObj && activeVariant && activeVariant.stock > 0) ? "In Stock" : "Out of Stock"}
+            </span>
+            {/* <span className="text-gray-600 flex items-center gap-1">
+              🚚 Estimated Delivery: 3-5 Days
+            </span> */}
+          </div>
         </div>
 
         {/* Description */}
@@ -141,70 +161,109 @@ const Header = ({ data }: { data: Product }) => {
 
         <hr className="h-[1px] border-t-black/10 mb-5" />
 
-        {/* Option / Variant selection */}
-        {variants.length > 0 && (
-          <>
-            <div className="flex flex-col mb-5">
-              <span className="text-sm sm:text-base text-black/60 mb-3">
-                Select Option: <span className="text-[#D32F2F] font-medium">{selectedVariant?.color}</span>
-              </span>
-              <div className="flex items-center flex-wrap gap-3">
-                {variants.map((v) => (
-                  <button
-                    key={v._id}
-                    type="button"
-                    onClick={() => handleVariantSelect(v)}
-                    className={cn(
-                      "px-5 py-2.5 text-sm rounded-full font-medium transition-all border",
-                      selectedVariant?._id === v._id
-                        ? "bg-[#D32F2F] text-white border-[#D32F2F] scale-105"
-                        : "bg-black/5 text-black border-black/10 hover:bg-black/10"
-                    )}
-                  >
-                    {v.color}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <hr className="h-[1px] border-t-black/10 mb-5" />
-          </>
-        )}
-
-        {/* Size selection */}
-        {sizes.length > 0 && (
-          <>  
+        {/* Model Picker */}
+        {availableModels.length > 0 && (
+          <React.Fragment>
             <div className="flex flex-col mb-5">
               <span className="text-sm sm:text-base text-black/60 mb-4">
-                Choose Quantity
+                Choose Model
               </span>
               <div className="flex items-center flex-wrap gap-3">
-                {sizes.map((s, idx) => (
-                  <button
-                    key={s.size || idx}
-                    type="button"
-                    onClick={() => setSelectedSize(s)}
-                    className={cn(
-                      "px-6 py-3 text-sm rounded-full font-medium transition-all border",
-                      selectedSize?.size === s.size
-                        ? "bg-[#D32F2F] text-white border-[#D32F2F]"
-                        : "bg-black/5 text-black border-black/10 hover:bg-black/10"
-                    )}
-                  >
-                    {s.size.toUpperCase()}
-                  </button>
-                ))}
+                {availableModels.map((model) => {
+                  const isSelected = selectedModelActual === model;
+                  return (
+                    <button
+                      key={model}
+                      type="button"
+                      onClick={() => setSelectedModel(model)}
+                      className={cn(
+                        "px-6 py-3 text-sm rounded-full font-medium transition-all border",
+                        isSelected
+                          ? "bg-[#D32F2F] text-white border-[#D32F2F]"
+                          : "bg-black/5 text-black border-black/10 hover:bg-black/10"
+                      )}
+                    >
+                      {model.toUpperCase()}
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <hr className="h-[1px] border-t-black/10 mb-5" />
-          </>
+          </React.Fragment>
         )}
 
-        {/* Selected Variant Details */}
-        {selectedVariant && selectedVariant.description && (
+        {/* Color Picker */}
+        {validColorsForModel.length > 0 && (
+          <React.Fragment>
+            <div className="flex flex-col mb-5">
+              <span className="text-sm sm:text-base text-black/60 mb-4">
+                Choose Color
+              </span>
+              <div className="flex items-center flex-wrap gap-3">
+                {validColorsForModel.map((color) => {
+                  const isSelected = selectedColorActual === color;
+                  const bgHex = getValidColor(color);
+                  return (
+                    <button
+                      key={color}
+                      type="button"
+                      title={color.toUpperCase()}
+                      onClick={() => setSelectedColor(color)}
+                      className={cn(
+                        "w-10 h-10 rounded-full transition-all border-2",
+                        isSelected
+                          ? "border-black shadow-md scale-110"
+                          : "border-black/20 hover:scale-105"
+                      )}
+                      style={{ backgroundColor: bgHex }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <hr className="h-[1px] border-t-black/10 mb-5" />
+          </React.Fragment>
+        )}
+
+        {/* Size Picker */}
+        {validSizeNames.length > 0 && (
+          <React.Fragment>
+            <div className="flex flex-col mb-5">
+              <span className="text-sm sm:text-base text-black/60 mb-4">
+                Choose {activeVariant?.sizeName || "Size"}
+              </span>
+              <div className="flex items-center flex-wrap gap-3">
+                {validSizeNames.map((sizeName) => {
+                  const isSelected = selectedSizeActual === sizeName;
+                  return (
+                    <button
+                      key={sizeName}
+                      type="button"
+                      onClick={() => setSelectedSize(sizeName)}
+                      className={cn(
+                        "px-6 py-3 text-sm rounded-full font-medium transition-all border",
+                        isSelected
+                          ? "bg-[#D32F2F] text-white border-[#D32F2F]"
+                          : "bg-black/5 text-black border-black/10 hover:bg-black/10"
+                      )}
+                    >
+                      {sizeName.toUpperCase()}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <hr className="h-[1px] border-t-black/10 mb-5" />
+          </React.Fragment>
+        )}
+
+        {/* Active Variant Details */}
+        {activeVariant && activeVariant.description && (
           <>
             <div className="mb-5 bg-black/5 p-4 rounded-xl border border-black/10 text-left">
               <h4 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-1">Variant Details</h4>
-              <p className="text-sm text-black/80">{selectedVariant.description}</p>
+              <p className="text-sm text-black/80">{activeVariant.description}</p>
             </div>
             <hr className="h-[1px] border-t-black/10 mb-5" />
           </>

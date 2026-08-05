@@ -15,13 +15,13 @@ const PhotoSection = ({ data }: { data: Product }) => {
   return (
     <div className="flex flex-col-reverse lg:flex-row lg:space-x-3.5">
       {data?.gallery && data.gallery.length > 0 && (
-        <div className="flex lg:flex-col space-x-3 lg:space-x-0 lg:space-y-3.5 w-full lg:w-fit items-center lg:justify-start justify-center">
+        <div className="flex lg:flex-col gap-3 lg:gap-3.5 w-full lg:w-[152px] overflow-x-auto lg:overflow-visible snap-x snap-mandatory py-2 lg:py-0 scrollbar-hide shrink-0">
           {data.gallery.map((photo, index) => (
             <button
               key={index}
               type="button"
-              className={`relative bg-[#F0EEED] rounded-[13px] xl:rounded-[20px] w-full max-w-[111px] xl:max-w-[152px] max-h-[106px] xl:max-h-[167px] xl:min-h-[167px] aspect-square overflow-hidden transition-all ${
-                selected === photo ? "border-[3px] border-[#D71920] scale-95" : ""
+              className={`relative shrink-0 bg-[#F0EEED] rounded-[13px] xl:rounded-[20px] w-[90px] h-[90px] sm:w-[111px] sm:h-[111px] lg:w-full lg:h-[152px] overflow-hidden transition-all duration-300 snap-center ${
+                selected === photo ? "ring-2 ring-offset-2 ring-[#D71920] opacity-100" : "opacity-70 hover:opacity-100"
               }`}
               onClick={() => setSelected(photo)}
             >

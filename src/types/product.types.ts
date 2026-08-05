@@ -13,6 +13,8 @@ export type SizeOption = {
 export type ProductVariant = {
   _id: string;
   color: string; // Used as Variant Name
+  modelName?: string;
+  sizeName?: string;
   sizesArray: SizeOption[];
   price: number;
   stock: number;

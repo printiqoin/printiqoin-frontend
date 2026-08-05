@@ -1,5 +1,6 @@
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
+import ProductListSec from "@/components/common/ProductListSec";
 import { Product, ProductVariant } from "@/types/product.types";
 import { notFound } from "next/navigation";
 
@@ -21,6 +22,8 @@ async function getProduct(id: string): Promise<Product | null> {
     const variants: ProductVariant[] = (p.variants ?? []).map((v: any) => ({
       _id: v._id || "",
       color: v.color || v.name || "",
+      modelName: v.modelName || "",
+      sizeName: v.sizeName || "",
       sizesArray: Array.isArray(v.sizes)
         ? v.sizes.map((s: any) => ({
             _id: s._id || "",
@@ -62,6 +65,42 @@ async function getProduct(id: string): Promise<Product | null> {
   }
 }
 
+async function getRelatedProducts(): Promise<Product[]> {
+  if (!api) return [];
+  try {
+    const res = await fetch(`${api}/product`, { next: { revalidate: 60 } });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const products = data.products || data;
+    if (!Array.isArray(products)) return [];
+    
+    return products.slice(0, 4).map((p: any) => {
+      const variants: ProductVariant[] = (p.variants ?? []).map((v: any) => ({
+        _id: v._id || "",
+        color: v.color || v.name || "",
+        modelName: v.modelName || "",
+        sizeName: v.sizeName || "",
+        sizesArray: [],
+        price: v.price || 0,
+        stock: v.stock || 0,
+        images: Array.isArray(v.images) ? v.images : v.images ? [v.images] : [],
+        isDefault: !!v.isDefault
+      }));
+      const defaultVariant = variants.find((v) => v.isDefault) || variants[0];
+      return {
+        id: p._id,
+        title: p.name,
+        srcUrl: defaultVariant?.images?.[0] || "/images/pic1.png",
+        price: defaultVariant?.price || 0,
+        rating: 4,
+        discount: { amount: 0, percentage: 0 },
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
 export default async function ProductPage({
   params,
 }: {
@@ -90,6 +129,9 @@ export default async function ProductPage({
           <section className="mb-11">
             <Header data={productData} />
           </section>
+          
+          <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
+          <ProductListSec title="Related Products" data={await getRelatedProducts()} />
         </div>
       </main>
     );
