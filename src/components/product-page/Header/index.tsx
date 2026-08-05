@@ -73,6 +73,7 @@ const getValidColor = (colorName: string): string => {
   if (clean.includes("gold")) return "#ffd700";
   if (clean.includes("silver")) return "#c0c0c0";
   if (clean.includes("beige")) return "#f5f5dc";
+  if (clean.includes("wooden") || clean.includes("wood")) return "#8B5A2B";
   return colorName;
 };
 
@@ -127,12 +128,7 @@ const Header = ({ data }: { data: Product }) => {
       </div>
       <div>
         {/* Title */}
-        <h1
-          className={cn([
-            integralCF.className,
-            "text-2xl md:text-[40px] md:leading-[40px] mb-3 md:mb-3.5 capitalize break-words",
-          ])}
-        >
+        <h1 className="text-2xl md:text-[40px] font-bold text-black md:leading-[40px] mb-3 md:mb-3.5 break-words">
           {data.title}
         </h1>
 
