@@ -79,24 +79,25 @@ const getValidColor = (colorName: string): string => {
 
 const Header = ({ data }: { data: Product }) => {
   const variants = data.variants ?? [];
-  const availableModels = Array.from(new Set(variants.map(v => v.modelName).filter(Boolean))) as string[];
+  const availableModels = Array.from(
+    new Set(variants.flatMap(v => (v.modelName || "").split(",").map(m => m.trim()).filter(Boolean)))
+  ) as string[];
   const [selectedModel, setSelectedModel] = useState<string>(availableModels[0] || "");
   const selectedModelActual = availableModels.includes(selectedModel) ? selectedModel : (availableModels[0] || "");
 
   const validColorsForModel = Array.from(
     new Set(
       variants
-        .filter(v => !selectedModelActual || v.modelName === selectedModelActual)
-        .map(v => v.color)
-        .filter(Boolean)
+        .filter(v => !selectedModelActual || (v.modelName || "").split(",").map(m => m.trim()).includes(selectedModelActual))
+        .flatMap(v => (v.color || "").split(",").map(c => c.trim()).filter(Boolean))
     )
   ) as string[];
   const [selectedColor, setSelectedColor] = useState<string>(validColorsForModel[0] || "");
   const selectedColorActual = validColorsForModel.includes(selectedColor) ? selectedColor : (validColorsForModel[0] || "");
 
   const activeVariant = variants.find(v => 
-    (!selectedModelActual || v.modelName === selectedModelActual) &&
-    (!selectedColorActual || v.color === selectedColorActual)
+    (!selectedModelActual || (v.modelName || "").split(",").map(m => m.trim()).includes(selectedModelActual)) &&
+    (!selectedColorActual || (v.color || "").split(",").map(c => c.trim()).includes(selectedColorActual))
   ) || variants[0] || null;
 
   const validSizesForVariant = activeVariant?.sizesArray || [];
@@ -197,22 +198,22 @@ const Header = ({ data }: { data: Product }) => {
                 Choose Color
               </span>
               <div className="flex items-center flex-wrap gap-3">
-                {validColorsForModel.map((color) => {
-                  const isSelected = selectedColorActual === color;
-                  const bgHex = getValidColor(color);
+                {validColorsForModel.map((colorRaw) => {
+                  const [colorName, colorHex] = colorRaw.includes("|") ? colorRaw.split("|") : [colorRaw, getValidColor(colorRaw)];
+                  const isSelected = selectedColorActual === colorRaw;
                   return (
                     <button
-                      key={color}
+                      key={colorRaw}
                       type="button"
-                      title={color.toUpperCase()}
-                      onClick={() => setSelectedColor(color)}
+                      title={colorName.toUpperCase()}
+                      onClick={() => setSelectedColor(colorRaw)}
                       className={cn(
                         "w-10 h-10 rounded-full transition-all border-2",
                         isSelected
                           ? "border-black shadow-md scale-110"
                           : "border-black/20 hover:scale-105"
                       )}
-                      style={{ backgroundColor: bgHex }}
+                      style={{ backgroundColor: colorHex }}
                     />
                   );
                 })}
