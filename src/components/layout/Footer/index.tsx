@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { PaymentBadge, SocialNetworks } from "./footer.types";
-import { FaInstagram, FaYoutube, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import LayoutSpacing from "./LayoutSpacing";
@@ -13,11 +13,6 @@ const socialsData: SocialNetworks[] = [
   },
   {
     id: 2,
-    icon: <FaYoutube />,
-    url: "https://youtube.com/@printiqo",
-  },
-  {
-    id: 3,
     icon: <FaFacebook />,
     url: "https://www.facebook.com/share/1GSh7GeuKk/?mibextid=wwXIfr",
   },
@@ -94,24 +89,29 @@ const Footer = () => {
                   <FaMapMarkerAlt className="text-[#D71920] mt-1 flex-shrink-0 text-base" />
                   <div>
                     <strong className="text-[#1a1a1a] block font-medium mb-1">Address:</strong>
-                    <span className="leading-relaxed">Printiqo HQ, Calicut, Kerala</span>
+                    <span className="leading-relaxed">printiqo, near Mavoor police station, Calicut road, Mavoor</span>
                   </div>
                 </li>
                 <li className="flex items-center gap-4">
                   <FaPhoneAlt className="text-[#D71920] flex-shrink-0 text-base" />
                   <div>
                     <strong className="text-[#1a1a1a] block font-medium mb-1">Phone:</strong>
-                    <a href="tel:+918111939595" className="hover:text-[#D71920] transition-colors">
-                      +91 8111 939 595
-                    </a>
+                    <span className="flex flex-col gap-1">
+                      <a href="tel:+918111939595" className="hover:text-[#D71920] transition-colors">
+                        8111939595
+                      </a>
+                      <a href="tel:+914952884595" className="hover:text-[#D71920] transition-colors">
+                        0495-2884595
+                      </a>
+                    </span>
                   </div>
                 </li>
                 <li className="flex items-center gap-4">
                   <FaEnvelope className="text-[#D71920] flex-shrink-0 text-base" />
                   <div>
                     <strong className="text-[#1a1a1a] block font-medium mb-1">Email:</strong>
-                    <a href="mailto:info@printiqo.in" className="hover:text-[#D71920] transition-colors">
-                      info@printiqo.in
+                    <a href="mailto:printiqo.in@gmail.com" className="hover:text-[#D71920] transition-colors">
+                      printiqo.in@gmail.com
                     </a>
                   </div>
                 </li>
